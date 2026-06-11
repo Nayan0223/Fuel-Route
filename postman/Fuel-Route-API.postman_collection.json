@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "Fuel Route API",
+    "description": "Assessment collection for the fuel route Django API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Route - NYC to LA (coordinates)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/route/?start=40.7128,-74.0060&finish=34.0522,-118.2437",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "40.7128,-74.0060"},
+            {"key": "finish", "value": "34.0522,-118.2437"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Route - Denver to Chicago (coordinates)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/route/?start=39.7392,-104.9903&finish=41.8781,-87.6298",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "39.7392,-104.9903"},
+            {"key": "finish", "value": "41.8781,-87.6298"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Route - City names (uses geocoding)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/route/?start=New York, NY&finish=Los Angeles, CA",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "route", ""],
+          "query": [
+            {"key": "start", "value": "New York, NY"},
+            {"key": "finish", "value": "Los Angeles, CA"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "City search - Denver",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/cities/?q=denver",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "cities", ""],
+          "query": [{"key": "q", "value": "denver"}]
+        }
+      }
+    },
+    {
+      "name": "Route - Missing params (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/route/",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "route", ""]
+        }
+      }
+    }
+  ]
+}
