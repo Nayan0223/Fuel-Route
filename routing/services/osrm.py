@@ -1,13 +1,31 @@
+from functools import lru_cache
+
 import requests
 from django.conf import settings
 
 from routing.services.geo import meters_to_miles
+
+MAX_ROUTE_COORDINATES = 600
 
 
 class RoutingError(Exception):
     pass
 
 
+def simplify_geometry(geometry: dict, max_points: int = MAX_ROUTE_COORDINATES) -> dict:
+    coordinates = geometry.get("coordinates", [])
+    if len(coordinates) <= max_points:
+        return geometry
+
+    step = max(1, len(coordinates) // max_points)
+    simplified = coordinates[::step]
+    if simplified[-1] != coordinates[-1]:
+        simplified.append(coordinates[-1])
+
+    return {"type": geometry["type"], "coordinates": simplified}
+
+
+@lru_cache(maxsize=64)
 def fetch_route(start: tuple[float, float], end: tuple[float, float]) -> dict:
     """
     Fetch a driving route from OSRM in a single API call.
@@ -31,11 +49,12 @@ def fetch_route(start: tuple[float, float], end: tuple[float, float]) -> dict:
         raise RoutingError(payload.get("message", "Routing failed"))
 
     route = payload["routes"][0]
-    coordinates = route["geometry"]["coordinates"]
-    points = [(coord[1], coord[0]) for coord in coordinates]
+    full_coordinates = route["geometry"]["coordinates"]
+    points = [(coord[1], coord[0]) for coord in full_coordinates]
+    geometry = simplify_geometry(route["geometry"])
 
     return {
-        "geometry": route["geometry"],
+        "geometry": geometry,
         "distance_miles": round(meters_to_miles(route["distance"]), 2),
         "duration_seconds": round(route["duration"]),
         "points": points,
