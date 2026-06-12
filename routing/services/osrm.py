@@ -27,10 +27,7 @@ def simplify_geometry(geometry: dict, max_points: int = MAX_ROUTE_COORDINATES) -
 
 @lru_cache(maxsize=64)
 def fetch_route(start: tuple[float, float], end: tuple[float, float]) -> dict:
-    """
-    Fetch a driving route from OSRM in a single API call.
-    Returns GeoJSON geometry, distance in miles, duration, and sampled points.
-    """
+    
     start_lng, start_lat = start[1], start[0]
     end_lng, end_lat = end[1], end[0]
     url = (

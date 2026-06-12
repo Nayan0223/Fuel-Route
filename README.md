@@ -1,3 +1,7 @@
+# First csv perfect align to set
+
+
+
 # Fuel Route API
 
 Django REST API that plans US driving routes, finds cost-effective fuel stops, and calculates total fuel spend for a vehicle with a **500-mile range** and **10 MPG**.

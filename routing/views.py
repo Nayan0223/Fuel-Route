@@ -21,13 +21,11 @@ def get_geocoded_stations() -> tuple[FuelStation, ...]:
 
 
 class RouteMapView(TemplateView):
-    """Interactive map UI for planning routes and viewing fuel stops."""
 
     template_name = "routing/route_map.html"
 
 
 class CitySearchView(APIView):
-    """GET /api/cities/?q=new york — USA cities only."""
 
     def get(self, request: Request) -> Response:
         query = request.query_params.get("q", "").strip()
@@ -37,12 +35,7 @@ class CitySearchView(APIView):
 
 
 class RouteFuelView(APIView):
-    """
-    GET /api/route/?start=...&finish=...
-
-    start/finish accept either 'lat,lng' coordinates or a US place name.
-    Coordinates avoid geocoding API calls (1 OSRM call total).
-    """
+   
 
     def get(self, request: Request) -> Response:
         start_raw = request.query_params.get("start", "").strip()
